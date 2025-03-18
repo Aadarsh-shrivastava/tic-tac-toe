@@ -1,9 +1,10 @@
 const boardElement = document.getElementById('board')
-const resetButton = document.getElementById('reset')
+const restartButton = document.getElementById('reset')
+const startButton = document.getElementById('start')
 
-let board = ['', '', '', '', '', '', '', '', '']
+const board = ['', '', '', '', '', '', '', '', '']
 
-let x_turn = true;
+let xTurn = true;
 let winner = null;
 
 boardElement.addEventListener('click', function (event) {
@@ -13,7 +14,7 @@ boardElement.addEventListener('click', function (event) {
 
         if (board[index] !== "" || winner !== null) return;
 
-        board[index] = x_turn ? "X" : "O";
+        board[index] = xTurn ? "X" : "O";
         event.target.textContent = board[index];
 
         if (checkWin(board[index])) {
@@ -22,23 +23,23 @@ boardElement.addEventListener('click', function (event) {
             return;
         }
 
-        // 🚨 Check for a draw
+        // Check for a draw
         if (!board.includes("")) {
             setTimeout(() => alert("It's a draw!"), 100);
             return;
         }
 
-        x_turn = !x_turn
+        xTurn = !xTurn
     }
 })
 
-resetButton.addEventListener('click', function () {
-    resetGame();
+restartButton.addEventListener('click', function () {
+    restartGame();
 })
 
-function resetGame() {
-    board = ['', '', '', '', '', '', '', '', '']
-    x_turn = true;
+function restartGame() {
+    board.fill('');
+    xTurn = true;
     winner = null;
     document.querySelectorAll('.block').forEach(block => {block.textContent = '';});
 }

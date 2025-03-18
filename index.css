@@ -7,18 +7,18 @@
 *,
 *::before,
 *::after {
-    border: none;
     box-sizing: border-box;
     margin: 0;
+    border: none;
     padding: 0;
 }
 
 /* elemetns */
 
 html {
-    font-family: "Work Sans", sans-serif;
-    font-size: 62.5%;
     overflow: auto;
+    font-size: 62.5%;
+    font-family: "Work Sans", sans-serif;
 }
 
 img {
@@ -41,17 +41,17 @@ html {
 }
 
 button{
-    background-color: transparent;
+    margin: auto;
+    box-shadow: 6px 6px 10px var(--shadow);
     border-top: 2px solid white;
     border-right: 2px solid white;
     border-bottom: 2px solid var(--dark-border);
     border-left: 2px solid var(--dark-border);
-    font-size: 8px;
-    margin: auto;
+    border-radius: 5px;
+    background-color: transparent;
     padding: 10px;
     width: 100%;
-    box-shadow: 6px 6px 10px var(--shadow);
-    border-radius: 5px;    
+    font-size: 8px;    
 }
 
 /* ids */
@@ -60,38 +60,37 @@ button{
 
 .game{
     display: flex;
-    flex-direction: column;
     position: relative;
     top: 50%;
     left: 50%;
-    width: fit-content;
-    transform: translate(-50%,-50%);
+    flex-direction: column;
     gap: 20px;
+    transform: translate(-50%,-50%);
+    width: fit-content;
 
 }
 
 .board {
-    /* background-color: var(--white); */
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    height: 300px;
     width: 300px;
+    height: 300px;
 }
 
 .tile{
     display: flex;
-    align-items: center;
     justify-content: center;
-    background-color: transparent;
+    align-items: center;
+    box-shadow: 6px 6px 10px var(--shadow);
     border-top: 2px solid white;
     border-right: 2px solid white;
     border-bottom: 2px solid var(--dark-border);
     border-left: 2px solid var(--dark-border);
-    font-size: 20px;
-    box-shadow: 6px 6px 10px var(--shadow);
     border-radius: 10px;
+    background-color: transparent;
+    font-size: 20px;
 }
 
 .game-control-buttons{
