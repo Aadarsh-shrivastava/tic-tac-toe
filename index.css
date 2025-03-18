@@ -1,0 +1,46 @@
+:root {
+    --white: #ddd;
+    --shadow:#0003;
+    --dark-border:#0002;
+}
+
+*,
+*::before,
+*::after {
+    border: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* elemetns */
+
+html {
+    font-family: "Work Sans", sans-serif;
+    font-size: 62.5%;
+    overflow: auto;
+}
+
+img {
+    display: inline-block;
+    margin: 0.5rem;
+    max-width: 100%;
+}
+
+body {
+    background-color: var(--background);
+    height: 100vh;
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    scrollbar-width: none;
+}
+
+/* ids */
+
+/* classes */
+
