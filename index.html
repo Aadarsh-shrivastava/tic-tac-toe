@@ -5,11 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./index.css" />
-    <title>Tik Tak Toe</title>
+    <title>Tic Tac Toe</title>
 </head>
 
 <body>
     <main class="game">
+        
+        <div class="profile-section" id="profile1">
+            <div class="profile-picture"></div>
+        </div>
+
         <div id="board" class="board">
 
             <!-- row 1 -->
@@ -38,9 +43,8 @@
     <!-- Custom Alert Box -->
     <div id="customAlert" class="alert-overlay">
         <div class="alert-box">
-            <p id="alertMessage" class="alert-message">This is a custom alert!</p>
             <div class="game-control-buttons">
-                <button class="pressable" id="closeAlertButton">OK</button>
+                <button class="pressable" id="closeAlertButton">close</button>
                 <button class="pressable" id="playAgainButton">Play Again</button>
             </div>
         </div>
