@@ -1,6 +1,5 @@
 const boardElement = document.getElementById('board')
 const restartButton = document.getElementById('reset')
-const startButton = document.getElementById('start')
 
 const board = ['', '', '', '', '', '', '', '', '']
 
