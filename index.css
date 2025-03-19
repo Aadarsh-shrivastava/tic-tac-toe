@@ -1,7 +1,7 @@
 :root {
+    --dark-border: #0002;
+    --shadow: #0003;
     --white: #ddd;
-    --shadow:#0003;
-    --dark-border:#0002;
 }
 
 *,
@@ -13,12 +13,36 @@
     padding: 0;
 }
 
-/* elemetns */
+/* elements */
+
+body {
+    background-color: var(--background);
+    height: 100vh;
+}
+
+button {
+    background-color: transparent;
+    border-bottom: 2px solid var(--dark-border);
+    border-left: 2px solid var(--dark-border);
+    border-radius: 5px;
+    border-right: 2px solid white;
+    border-top: 2px solid white;
+    box-shadow: 6px 6px 10px var(--shadow);
+    font-size: 8px;
+    margin: auto;
+    padding: 10px;
+    width: 100%;
+}
 
 html {
     font-family: "Work Sans", sans-serif;
     font-size: 62.5%;
     overflow: auto;
+    scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+    display: none;
 }
 
 img {
@@ -27,20 +51,57 @@ img {
     max-width: 100%;
 }
 
-body {
-    background-color: var(--background);
-    height: 100vh;
-}
-
-html::-webkit-scrollbar {
-    display: none;
-}
-
-html {
-    scrollbar-width: none;
-}
-
-/* ids */
-
 /* classes */
 
+.board {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 300px;
+    width: 300px;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    left: 50%;
+    position: relative;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: fit-content;
+}
+
+.game-control-buttons {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    justify-content: space-evenly;
+}
+
+.pressable:hover {
+    box-shadow: 3px 3px 5px var(--shadow);
+}
+
+.pressable:focus {
+    box-shadow: none;
+}
+
+.pressable-text {
+    color: #0005;
+}
+
+.tile {
+    align-items: center;
+    background-color: transparent;
+    border-bottom: 2px solid var(--dark-border);
+    border-left: 2px solid var(--dark-border);
+    border-radius: 10px;
+    border-right: 2px solid white;
+    border-top: 2px solid white;
+    box-shadow: 6px 6px 10px var(--shadow);
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+}
