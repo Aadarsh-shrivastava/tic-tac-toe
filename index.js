@@ -64,7 +64,7 @@ startButton.addEventListener("click", function (event) {
 // functions
 function restartGame() {
   board.fill("");
-  xTurn = true̦;
+  xTurn = true;
   winner = null;
   clearTimeout(timeoutId);
   timeoutId = null;
