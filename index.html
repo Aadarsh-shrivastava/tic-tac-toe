@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./index.css" />
-    <title>Tik Tak Toe</title>
+    <title>Tic Tac Toe</title>
 </head>
 
 <body>
     <main class="game">
+
         <div id="board" class="board">
 
             <!-- row 1 -->
@@ -29,9 +30,22 @@
 
         </div>
         <div class="game-control-buttons">
-            <button class="pressable tile pressable-text" id="restart">Restart</button>
+            <button class="pressable tile pressable-text" id="startGameButton">Start</button>
+            <button class="pressable tile pressable-text" id="restartButton">Restart</button>
         </div>
+
+        
     </main>
+    <!-- Custom Alert Box -->
+    <div id="customAlert" class="alert-overlay">
+        <div class="alert-box">
+            <p id="alertMessage" class="alert-message"></p>
+            <div class="game-control-buttons">
+                <button class="pressable" id="closeAlertButton">Cancel</button>
+                <button class="pressable" id="playAgainButton">Play Again</button>
+            </div>
+        </div>
+    </div>
     <script src="./index.js"></script>
 </body>
 

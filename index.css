@@ -84,9 +84,6 @@ img {
     box-shadow: 3px 3px 5px var(--shadow);
 }
 
-.pressable:focus {
-    box-shadow: none;
-}
 
 .pressable-text {
     color: #0005;
@@ -104,4 +101,63 @@ img {
     display: flex;
     font-size: 20px;
     justify-content: center;
+}
+
+/* alert */
+.alert-overlay {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    visibility: hidden;
+    width: 100%;
+}
+
+/* Alert box styling */
+.alert-box {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-size: large;
+    padding: 20px;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+    width: 300px;
+}
+
+.alert-message{
+    padding: 10px;
+}
+
+/* Show alert animation */
+.alert-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+}
+
+.alert-overlay.show .alert-box {
+    transform: scale(1);
+}
+
+/* Close button */
+.alert-button {
+    background: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+    padding: 8px 15px;
+}
+
+.alert-button:hover {
+    background: #0056b3;
 }
