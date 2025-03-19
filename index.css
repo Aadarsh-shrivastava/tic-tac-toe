@@ -84,9 +84,9 @@ img {
     box-shadow: 3px 3px 5px var(--shadow);
 }
 
-.pressable:focus {
+/* .pressable:focus {
     box-shadow: none;
-}
+} */
 
 .pressable-text {
     color: #0005;
@@ -104,4 +104,63 @@ img {
     display: flex;
     font-size: 20px;
     justify-content: center;
+}
+
+/* alert */
+.alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+/* Alert box styling */
+.alert-box {
+    background: white;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: scale(0.9);
+    font-size: large;
+    transition: transform 0.3s;
+}
+
+.alert-message{
+    padding: 10px;
+}
+
+/* Show alert animation */
+.alert-overlay.show {
+    visibility: visible;
+    opacity: 1;
+    z-index: 10;
+}
+
+.alert-overlay.show .alert-box {
+    transform: scale(1);
+}
+
+/* Close button */
+.alert-button {
+    margin-top: 15px;
+    padding: 8px 15px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.alert-button:hover {
+    background: #0056b3;
 }

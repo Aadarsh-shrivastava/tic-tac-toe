@@ -29,9 +29,22 @@
 
         </div>
         <div class="game-control-buttons">
-            <button class="pressable tile pressable-text" id="restart">Restart</button>
+            <button class="pressable tile pressable-text" id="startGameButton">Start</button>
+            <button class="pressable tile pressable-text" id="restartButton">Restart</button>
         </div>
+
+        
     </main>
+    <!-- Custom Alert Box -->
+    <div id="customAlert" class="alert-overlay">
+        <div class="alert-box">
+            <p id="alertMessage" class="alert-message">This is a custom alert!</p>
+            <div class="game-control-buttons">
+                <button class="pressable" id="closeAlertButton">OK</button>
+                <button class="pressable" id="playAgainButton">Play Again</button>
+            </div>
+        </div>
+    </div>
     <script src="./index.js"></script>
 </body>
 

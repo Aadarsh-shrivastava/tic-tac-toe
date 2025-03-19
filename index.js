@@ -1,12 +1,22 @@
+// dom elements
 const boardElement = document.getElementById('board')
-const restartButton = document.getElementById('reset')
+const restartButton = document.getElementById('restartButton')
+const playAgainButton = document.getElementById('playAgainButton')
+const closeAlertButton = document.getElementById('closeAlertButton')
+const startButton = document.getElementById('startGameButton')
 
 const board = ['', '', '', '', '', '', '', '', '']
 
 let xTurn = true;
 let winner = null;
+let timeoutId;
+let gameStarted = false;
 
+// listeners
 boardElement.addEventListener('click', function (event) {
+    if(!gameStarted)
+        return;
+
     if (event.target.classList.contains("block")) {
         const blocks = Array.from(document.querySelectorAll(".block"))
         const index = blocks.indexOf(event.target)
@@ -18,17 +28,18 @@ boardElement.addEventListener('click', function (event) {
 
         if (checkWin(board[index])) {
             winner = board[index];
-            setTimeout(() => alert(`${winner} wins!`), 100);
+            setTimeout(() => showAlert(`${winner} wins!`), 100);
             return;
         }
 
         // Check for a draw
         if (!board.includes("")) {
-            setTimeout(() => alert("It's a draw!"), 100);
+            setTimeout(() => showAlert("It's a draw!"), 100);
             return;
         }
 
         xTurn = !xTurn
+        resetInactivity();
     }
 })
 
@@ -36,11 +47,39 @@ restartButton.addEventListener('click', function () {
     restartGame();
 })
 
+closeAlertButton.addEventListener('click', function (event) { closeAlert() })
+
+playAgainButton.addEventListener('click', function (event) { closeAlert(); restartGame() })
+
+startButton.addEventListener('click',function(event){
+    gameStarted=true
+    resetInactivity();
+    startButton.style.boxShadow='none';
+})
+
+// functions
 function restartGame() {
     board.fill('');
     xTurn = true;
     winner = null;
+    clearTimeout(timeoutId)
+    timeoutId = null;
+    gameStarted=false
+    startButton.style.boxShadow='6px 6px 10px #0003'
     document.querySelectorAll('.block').forEach(block => {block.textContent = '';});
+}
+
+function resetInactivity() {
+    clearTimeout(timeoutId);
+
+    if (!gameStarted || winner !== null) return;
+
+    timeoutId = setTimeout(() => {
+        if(winner!==null)return ;
+
+        winner = xTurn ? "O" : "X";
+        showAlert(`${winner} wins by timeout!`);
+    }, 15000);
 }
 
 function checkWin(turn) {
@@ -57,3 +96,14 @@ function checkWin(turn) {
     )
 
 }
+
+
+function showAlert(message) {
+    document.getElementById("alertMessage").innerText = message;
+    document.getElementById("customAlert").classList.add("show");
+}
+
+function closeAlert() {
+    document.getElementById("customAlert").classList.remove("show");
+}
+
