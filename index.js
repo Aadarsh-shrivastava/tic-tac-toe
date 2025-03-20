@@ -4,13 +4,18 @@ const restartButton = document.getElementById("restartButton");
 const playAgainButton = document.getElementById("playAgainButton");
 const closeAlertButton = document.getElementById("closeAlertButton");
 const startButton = document.getElementById("startGameButton");
+const timerElement1 = document.getElementById("timer1");
+const timerElement2 = document.getElementById("timer2");
+const timeBar1 = document.getElementById("profile-time-bar-1");
+const timeBar2 = document.getElementById("profile-time-bar-2");
 
 const board = ["", "", "", "", "", "", "", "", ""];
 
 let xTurn = true;
 let winner = null;
-let timeoutId;
 let gameStarted = false;
+let countdown;
+let timeLeft = 15;
 
 // listeners
 boardElement.addEventListener("click", function (event) {
@@ -27,13 +32,13 @@ boardElement.addEventListener("click", function (event) {
 
     if (checkWin(board[index])) {
       winner = board[index];
-      setTimeout(() => showAlert(`${winner} wins!`), 100);
+      setTimeout(() => showAlert(`${winner} wins!`), 500);
       return;
     }
 
     // Check for a draw
     if (!board.includes("")) {
-      setTimeout(() => showAlert("It's a draw!"), 100);
+      setTimeout(() => showAlert("It's a draw!"), 500);
       return;
     }
 
@@ -66,26 +71,55 @@ function restartGame() {
   board.fill("");
   xTurn = true;
   winner = null;
-  clearTimeout(timeoutId);
-  timeoutId = null;
   gameStarted = false;
+
+  // timers reset
+  clearInterval(countdown);
+  timeLeft = 15;
+  updateTimer();
+
+  // ui update
   startButton.style.boxShadow = "6px 6px 10px #0003";
+  timeBar1.style.width = '0px';
+  timeBar2.style.width = '0px';
+  
   document.querySelectorAll(".block").forEach((block) => {
     block.textContent = "";
   });
 }
 
+function updateTimer() {
+  let percentage = (timeLeft / 15) * 100;
+  if (xTurn) {
+    timerElement1.textContent = `Time left: ${timeLeft}s`;
+    timeBar1.style.width = `${percentage}%`;
+  } else {
+    timerElement2.textContent = `Time left: ${timeLeft}s`;
+    timeBar2.style.width = `${percentage}%`;
+  }
+}
+
 function resetInactivity() {
-  clearTimeout(timeoutId);
+  clearInterval(countdown);
 
   if (!gameStarted || winner !== null) return;
 
-  timeoutId = setTimeout(() => {
-    if (winner !== null) return;
+  timeLeft = 15;
+  updateTimer();
 
-    winner = xTurn ? "O" : "X";
-    showAlert(`${winner} wins by timeout!`);
-  }, 15000);
+  countdown = setInterval(() => {
+    timeLeft--;
+    updateTimer();
+
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      if (winner !== null) return;
+
+      winner = xTurn ? "O" : "X";
+      showAlert(`${winner} wins by timeout!`);
+    }
+  }, 1000);
+
 }
 
 function checkWin(turn) {
