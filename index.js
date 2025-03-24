@@ -4,20 +4,16 @@ const restartButton = document.getElementById("restartButton");
 const playAgainButton = document.getElementById("playAgainButton");
 const closeAlertButton = document.getElementById("closeAlertButton");
 const startButton = document.getElementById("startGameButton");
-const xtimer = document.getElementById("timer1");
-const oTimer = document.getElementById("timer2");
 const xTimeBar = document.querySelector("#profile-time-bar-x .border-rect");
-const oTimeBar = document.querySelector("#profile-time-bar-o .border-rect");   
+const oTimeBar = document.querySelector("#profile-time-bar-o .border-rect");
 
 const board = ["", "", "", "", "", "", "", "", ""];
 
 let xTurn = true;
 let winner = null;
 let gameStarted = false;
-let countdown;
 let timeLeft = 15;
 let timeoutId;
-
 
 const xTotalLength = xTimeBar.getTotalLength(); // Gets actual stroke length dynamically
 const oTotalLength = oTimeBar.getTotalLength();
@@ -40,14 +36,15 @@ boardElement.addEventListener("click", function (event) {
 
     if (checkWin(board[index])) {
       winner = board[index];
-      clearTimeout(timeoutId)
-      resetTimers()
+      clearTimeout(timeoutId);
+      resetTimers();
       setTimeout(() => showAlert(`${winner} wins!`), 500);
       return;
     }
 
     // Check for a draw
     if (!board.includes("")) {
+      resetTimers();
       setTimeout(() => showAlert("It's a draw!"), 500);
       return;
     }
@@ -64,8 +61,8 @@ closeAlertButton.addEventListener("click", function (event) {
 playAgainButton.addEventListener("click", function (event) {
   closeAlert();
   restartGame();
-  gameStarted=true;
-  resetInactivity()
+  gameStarted = true;
+  resetInactivity();
 });
 
 startButton.addEventListener("click", function (event) {
@@ -88,10 +85,9 @@ function restartGame() {
   });
 }
 
-function updateTimer(){
-
+function updateTimer() {
   let percentage = timeLeft / 15; // Normalize to 0 - 1
-  
+
   if (xTurn) {
     xTimeBar.style.animation = "none";
     void xTimeBar.offsetWidth; // Force reflow (trick to restart animation)
@@ -103,9 +99,9 @@ function updateTimer(){
   }
 }
 
-function resetTimers(){
-  xTimeBar.style.strokeDashoffset='0';
-  oTimeBar.style.strokeDashoffset='0';
+function resetTimers() {
+  xTimeBar.style.strokeDashoffset = "0";
+  oTimeBar.style.strokeDashoffset = "0";
 
   xTimeBar.style.animation = "none";
   oTimeBar.style.animation = "none";
@@ -123,7 +119,6 @@ function resetInactivity() {
     winner = xTurn ? "O" : "X";
     showAlert(`${winner} wins by timeout!`);
   }, 15000);
-
 }
 
 function checkWin(turn) {

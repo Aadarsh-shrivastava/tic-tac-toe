@@ -204,21 +204,21 @@ img {
     font-size: 14px;
 }
 
-.profile-time-bar {
-    height: 100%;
-    position: absolute;
+.profile-time-bar{
     fill: none;
-    stroke: green;
-    stroke-width: 4;
-    stroke-dasharray: 400;
+    height: 100%;
     pointer-events: none; /* Prevents blocking clicks */
+    position: absolute;
+    stroke: green;
+    stroke-dasharray: 400;
+    stroke-width: 4;
 }
 
 .border-rect {
     height: 97%;
-    width: 96%;
     rx: 10;
     ry: 10;
+    width: 96%;
     
 }
 
