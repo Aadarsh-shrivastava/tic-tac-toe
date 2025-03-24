@@ -36,17 +36,13 @@ boardElement.addEventListener("click", function (event) {
 
     if (checkWin(board[index])) {
       winner = board[index];
-      clearTimeout(timeoutId);
-      resetTimers();
-      setTimeout(() => showAlert(`${winner} wins!`), 500);
+      stopGame(`${winner} wins!`, winner);
       return;
     }
 
     // Check for a draw
     if (!board.includes("")) {
-      resetTimers();
-      clearTimeout(timeoutId);
-      setTimeout(() => showAlert("It's a draw!"), 500);
+      stopGame(`its a Draw !`, null);
       return;
     }
 
@@ -54,6 +50,15 @@ boardElement.addEventListener("click", function (event) {
     resetInactivity();
   }
 });
+
+function stopGame(message, winner) {
+  winner = winner;
+  clearTimeout(timeoutId);
+  resetTimers();
+  setTimeout(() => showAlert(message), 500);
+  gameStarted = false;
+  startButton.style.boxShadow = "6px 6px 10px #0003";
+}
 
 closeAlertButton.addEventListener("click", function (event) {
   closeAlert();
@@ -67,9 +72,11 @@ playAgainButton.addEventListener("click", function (event) {
 });
 
 startButton.addEventListener("click", function (event) {
+  if (gameStarted) return;
   gameStarted = true;
   restartGame();
   resetInactivity();
+  startButton.style.boxShadow = "none";
 });
 
 // functions
@@ -86,7 +93,7 @@ function restartGame() {
 }
 
 function updateTimer() {
-  setTimeout(() => { 
+  setTimeout(() => {
     if (xTurn) {
       xTimeBar.style.animation = "timerAnimation 15s linear forwards";
     } else {
@@ -96,10 +103,10 @@ function updateTimer() {
 }
 
 function resetTimers() {
-  console.log('resetting')
+  console.log("resetting");
   xTimeBar.style.animation = "none";
   oTimeBar.style.animation = "none";
-  
+
   // Reset the stroke offset completely to prevent visual glitches
   xTimeBar.style.strokeDashoffset = xTotalLength;
   oTimeBar.style.strokeDashoffset = oTotalLength;
