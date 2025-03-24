@@ -86,33 +86,33 @@ function restartGame() {
 }
 
 function updateTimer() {
-  let percentage = timeLeft / 15; // Normalize to 0 - 1
+  resetTimers(); // Ensure previous animations are cleared
 
-  if (xTurn) {
-    xTimeBar.style.animation = "none";
-    void xTimeBar.offsetWidth; // Force reflow (trick to restart animation)
-    xTimeBar.style.animation = "timerAnimation 15s linear forwards";
-  } else {
-    oTimeBar.style.animation = "none";
-    void oTimeBar.offsetWidth; // Force reflow (trick to restart animation)
-    oTimeBar.style.animation = "timerAnimation 15s linear forwards";
-  }
+  setTimeout(() => { 
+    if (xTurn) {
+      xTimeBar.style.animation = "timerAnimation 15s linear forwards";
+    } else {
+      oTimeBar.style.animation = "timerAnimation 15s linear forwards";
+    }
+  }, 10); // Small delay ensures browser processes animation removal
 }
 
 function resetTimers() {
-  xTimeBar.style.strokeDashoffset = "0";
-  oTimeBar.style.strokeDashoffset = "0";
-
   xTimeBar.style.animation = "none";
   oTimeBar.style.animation = "none";
+  
+  // Reset the stroke offset completely to prevent visual glitches
+  xTimeBar.style.strokeDashoffset = xTotalLength;
+  oTimeBar.style.strokeDashoffset = oTotalLength;
 }
-
 function resetInactivity() {
   clearTimeout(timeoutId);
   resetTimers();
 
   if (!gameStarted || winner !== null) return;
+
   updateTimer();
+
   timeoutId = setTimeout(() => {
     if (winner !== null) return;
     resetTimers();
