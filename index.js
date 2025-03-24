@@ -4,13 +4,22 @@ const restartButton = document.getElementById("restartButton");
 const playAgainButton = document.getElementById("playAgainButton");
 const closeAlertButton = document.getElementById("closeAlertButton");
 const startButton = document.getElementById("startGameButton");
+const xTimeBar = document.querySelector("#profile-time-bar-x .border-rect");
+const oTimeBar = document.querySelector("#profile-time-bar-o .border-rect");
 
 const board = ["", "", "", "", "", "", "", "", ""];
 
 let xTurn = true;
 let winner = null;
-let timeoutId;
 let gameStarted = false;
+let timeLeft = 15;
+let timeoutId;
+
+const xTotalLength = xTimeBar.getTotalLength(); // Gets actual stroke length dynamically
+const oTotalLength = oTimeBar.getTotalLength();
+
+xTimeBar.style.strokeDasharray = xTotalLength;
+oTimeBar.style.strokeDasharray = oTotalLength;
 
 // listeners
 boardElement.addEventListener("click", function (event) {
@@ -27,23 +36,23 @@ boardElement.addEventListener("click", function (event) {
 
     if (checkWin(board[index])) {
       winner = board[index];
-      setTimeout(() => showAlert(`${winner} wins!`), 100);
+      clearTimeout(timeoutId);
+      resetTimers();
+      setTimeout(() => showAlert(`${winner} wins!`), 500);
       return;
     }
 
     // Check for a draw
     if (!board.includes("")) {
-      setTimeout(() => showAlert("It's a draw!"), 100);
+      resetTimers();
+      clearTimeout(timeoutId);
+      setTimeout(() => showAlert("It's a draw!"), 500);
       return;
     }
 
     xTurn = !xTurn;
     resetInactivity();
   }
-});
-
-restartButton.addEventListener("click", function () {
-  restartGame();
 });
 
 closeAlertButton.addEventListener("click", function (event) {
@@ -53,12 +62,14 @@ closeAlertButton.addEventListener("click", function (event) {
 playAgainButton.addEventListener("click", function (event) {
   closeAlert();
   restartGame();
+  gameStarted = true;
+  resetInactivity();
 });
 
 startButton.addEventListener("click", function (event) {
   gameStarted = true;
+  restartGame();
   resetInactivity();
-  startButton.style.boxShadow = "none";
 });
 
 // functions
@@ -66,23 +77,43 @@ function restartGame() {
   board.fill("");
   xTurn = true;
   winner = null;
+
+  // timers reset
   clearTimeout(timeoutId);
-  timeoutId = null;
-  gameStarted = false;
-  startButton.style.boxShadow = "6px 6px 10px #0003";
   document.querySelectorAll(".block").forEach((block) => {
     block.textContent = "";
   });
 }
 
+function updateTimer() {
+  setTimeout(() => { 
+    if (xTurn) {
+      xTimeBar.style.animation = "timerAnimation 15s linear forwards";
+    } else {
+      oTimeBar.style.animation = "timerAnimation 15s linear forwards";
+    }
+  }, 10); // Small delay ensures browser processes animation removal
+}
+
+function resetTimers() {
+  console.log('resetting')
+  xTimeBar.style.animation = "none";
+  oTimeBar.style.animation = "none";
+  
+  // Reset the stroke offset completely to prevent visual glitches
+  xTimeBar.style.strokeDashoffset = xTotalLength;
+  oTimeBar.style.strokeDashoffset = oTotalLength;
+}
 function resetInactivity() {
   clearTimeout(timeoutId);
+  resetTimers();
 
   if (!gameStarted || winner !== null) return;
 
+  updateTimer();
+
   timeoutId = setTimeout(() => {
     if (winner !== null) return;
-
     winner = xTurn ? "O" : "X";
     showAlert(`${winner} wins by timeout!`);
   }, 15000);
