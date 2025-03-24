@@ -1,6 +1,7 @@
 :root {
     --dark-border: #0002;
     --shadow: #0003;
+    --text-gray: #000d;
     --white: #ddd;
 }
 
@@ -86,7 +87,7 @@ img {
 
 
 .pressable-text {
-    color: #0005;
+    color: #000d;
 }
 
 .tile {
@@ -162,22 +163,30 @@ img {
     background: #0056b3;
 }
 
-.profile-container{ 
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
+.profiles{
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-container{
+    border: none;
+    border-radius: 18px; 
+    flex-direction: column;
     position: relative;
+    width: fit-content;
 }
 
 .profile-section {
-    align-items: center;
+    align-items: center; 
+    border: none;
     box-shadow:none ;
     display: flex;
+    flex-direction: column;
     gap: 10px;
     justify-content: space-between;
     margin: 0px;
     padding: 5px;
-    position: relative; 
-    width: 100%;
+    position: relative;
 }
 
 .profile-section > img {
@@ -192,17 +201,32 @@ img {
 }
 
 .profile-timer{
-font-size: 14px;
+    font-size: 14px;
 }
 
 .profile-time-bar {
-    background-color: green;
-    border-bottom-left-radius:10px;
-    border-bottom-right-radius:10px;
-    bottom: -4px; 
-    height: 4px;
-    left: 0px;
-    position: absolute; 
-    transition: width 0.5s linear; 
-    width: 0%;
+    height: 100%;
+    position: absolute;
+    fill: none;
+    stroke: green;
+    stroke-width: 4;
+    stroke-dasharray: 400;
+    pointer-events: none; /* Prevents blocking clicks */
+}
+
+.border-rect {
+    height: 97%;
+    width: 96%;
+    rx: 10;
+    ry: 10;
+    
+}
+
+@keyframes timerAnimation {
+    from {
+        stroke-dashoffset: 0;  /* Full border visible */
+    }
+    to {
+        stroke-dashoffset: 470; /* Fully hidden */
+    }
 }

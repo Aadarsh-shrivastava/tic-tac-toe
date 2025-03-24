@@ -10,16 +10,36 @@
 
 <body>
     <main class="game">
-        <div class="profile-container tile">
-            <div class="profile-section">
-                <img src="./assets/dp1.png" />
-                <div class="profile-content">
-                    <p>Aadarsh</p>
-                    <div class="profile-timer" id="timer1"></div>
+        <div class="profiles"> 
+            <div class="profile-container tile">
+                <div class="profile-section">
+                    <img src="./assets/dp1.jpg" />
+                    <div class="profile-content">
+                        <div>X</div>
+                    </div>
                 </div>
+            
+                <!-- Profile X SVG Timer -->
+                <svg class="profile-time-bar" id="profile-time-bar-x" width="100%" height="100%">
+                    <rect class="border-rect" x="2" y="2" width="100%" height="100%" rx="8" ry="10"></rect>
+                </svg>
             </div>
-            <div class="profile-time-bar" id="profile-time-bar-1"></div>
+            
+            <div class="profile-container tile">
+                <div class="profile-section">
+                    <img src="./assets/dp2.png" />
+                    <div class="profile-content">
+                        <div>O</div>
+                    </div>
+                </div>
+            
+                <!-- Profile O SVG Timer -->
+                <svg class="profile-time-bar" id="profile-time-bar-o" width="100%" height="100%">
+                    <rect class="border-rect" x="2" y="2" width="100%" height="100%" rx="8" ry="10"></rect>
+                </svg>
+            </div>
         </div>
+
         <div id="board" class="board">
 
             <!-- row 1 -->
@@ -38,21 +58,11 @@
             <div class="block pressable tile pressable-text"></div>
 
         </div>
+
         <div class="game-control-buttons">
             <button class="pressable tile pressable-text" id="startGameButton">Start</button>
-            <button class="pressable tile pressable-text" id="restartButton">Restart</button>
         </div>
-        <div class="profile-container tile">
-            <div class="profile-section">
-                <img src="./assets/dp2.png" />
-                <div class="profile-content">
-                    <p>Shrivastava</p>
-                    <div class="profile-timer" id="timer2"></div>
-                </div>
-            </div>
-            <div class="profile-time-bar" id="profile-time-bar-2"></div>
-        </div>
-        
+
     </main>
     <!-- Custom Alert Box -->
     <div id="customAlert" class="alert-overlay">

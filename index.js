@@ -4,10 +4,10 @@ const restartButton = document.getElementById("restartButton");
 const playAgainButton = document.getElementById("playAgainButton");
 const closeAlertButton = document.getElementById("closeAlertButton");
 const startButton = document.getElementById("startGameButton");
-const timerElement1 = document.getElementById("timer1");
-const timerElement2 = document.getElementById("timer2");
-const timeBar1 = document.getElementById("profile-time-bar-1");
-const timeBar2 = document.getElementById("profile-time-bar-2");
+const xtimer = document.getElementById("timer1");
+const oTimer = document.getElementById("timer2");
+const xTimeBar = document.querySelector("#profile-time-bar-x .border-rect");
+const oTimeBar = document.querySelector("#profile-time-bar-o .border-rect");   
 
 const board = ["", "", "", "", "", "", "", "", ""];
 
@@ -16,6 +16,14 @@ let winner = null;
 let gameStarted = false;
 let countdown;
 let timeLeft = 15;
+let timeoutId;
+
+
+const xTotalLength = xTimeBar.getTotalLength(); // Gets actual stroke length dynamically
+const oTotalLength = oTimeBar.getTotalLength();
+
+xTimeBar.style.strokeDasharray = xTotalLength;
+oTimeBar.style.strokeDasharray = oTotalLength;
 
 // listeners
 boardElement.addEventListener("click", function (event) {
@@ -32,6 +40,8 @@ boardElement.addEventListener("click", function (event) {
 
     if (checkWin(board[index])) {
       winner = board[index];
+      clearTimeout(timeoutId)
+      resetTimers()
       setTimeout(() => showAlert(`${winner} wins!`), 500);
       return;
     }
@@ -47,10 +57,6 @@ boardElement.addEventListener("click", function (event) {
   }
 });
 
-restartButton.addEventListener("click", function () {
-  restartGame();
-});
-
 closeAlertButton.addEventListener("click", function (event) {
   closeAlert();
 });
@@ -58,12 +64,14 @@ closeAlertButton.addEventListener("click", function (event) {
 playAgainButton.addEventListener("click", function (event) {
   closeAlert();
   restartGame();
+  gameStarted=true;
+  resetInactivity()
 });
 
 startButton.addEventListener("click", function (event) {
   gameStarted = true;
+  restartGame();
   resetInactivity();
-  startButton.style.boxShadow = "none";
 });
 
 // functions
@@ -71,54 +79,50 @@ function restartGame() {
   board.fill("");
   xTurn = true;
   winner = null;
-  gameStarted = false;
 
   // timers reset
-  clearInterval(countdown);
-  timeLeft = 15;
-  updateTimer();
-
-  // ui update
-  startButton.style.boxShadow = "6px 6px 10px #0003";
-  timeBar1.style.width = '0px';
-  timeBar2.style.width = '0px';
-  
+  clearTimeout(timeoutId);
+  resetTimers();
   document.querySelectorAll(".block").forEach((block) => {
     block.textContent = "";
   });
 }
 
-function updateTimer() {
-  let percentage = (timeLeft / 15) * 100;
+function updateTimer(){
+
+  let percentage = timeLeft / 15; // Normalize to 0 - 1
+  
   if (xTurn) {
-    timerElement1.textContent = `Time left: ${timeLeft}s`;
-    timeBar1.style.width = `${percentage}%`;
+    xTimeBar.style.animation = "none";
+    void xTimeBar.offsetWidth; // Force reflow (trick to restart animation)
+    xTimeBar.style.animation = "timerAnimation 15s linear forwards";
   } else {
-    timerElement2.textContent = `Time left: ${timeLeft}s`;
-    timeBar2.style.width = `${percentage}%`;
+    oTimeBar.style.animation = "none";
+    void oTimeBar.offsetWidth; // Force reflow (trick to restart animation)
+    oTimeBar.style.animation = "timerAnimation 15s linear forwards";
   }
 }
 
+function resetTimers(){
+  xTimeBar.style.strokeDashoffset='0';
+  oTimeBar.style.strokeDashoffset='0';
+
+  xTimeBar.style.animation = "none";
+  oTimeBar.style.animation = "none";
+}
+
 function resetInactivity() {
-  clearInterval(countdown);
+  clearTimeout(timeoutId);
+  resetTimers();
 
   if (!gameStarted || winner !== null) return;
-
-  timeLeft = 15;
   updateTimer();
-
-  countdown = setInterval(() => {
-    timeLeft--;
-    updateTimer();
-
-    if (timeLeft <= 0) {
-      clearInterval(countdown);
-      if (winner !== null) return;
-
-      winner = xTurn ? "O" : "X";
-      showAlert(`${winner} wins by timeout!`);
-    }
-  }, 1000);
+  timeoutId = setTimeout(() => {
+    if (winner !== null) return;
+    resetTimers();
+    winner = xTurn ? "O" : "X";
+    showAlert(`${winner} wins by timeout!`);
+  }, 15000);
 
 }
 
