@@ -103,7 +103,6 @@ function updateTimer() {
 }
 
 function resetTimers() {
-  console.log("resetting");
   xTimeBar.style.animation = "none";
   oTimeBar.style.animation = "none";
 
