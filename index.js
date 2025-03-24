@@ -45,6 +45,7 @@ boardElement.addEventListener("click", function (event) {
     // Check for a draw
     if (!board.includes("")) {
       resetTimers();
+      clearTimeout(timeoutId);
       setTimeout(() => showAlert("It's a draw!"), 500);
       return;
     }
@@ -79,15 +80,12 @@ function restartGame() {
 
   // timers reset
   clearTimeout(timeoutId);
-  resetTimers();
   document.querySelectorAll(".block").forEach((block) => {
     block.textContent = "";
   });
 }
 
 function updateTimer() {
-  resetTimers(); // Ensure previous animations are cleared
-
   setTimeout(() => { 
     if (xTurn) {
       xTimeBar.style.animation = "timerAnimation 15s linear forwards";
@@ -98,6 +96,7 @@ function updateTimer() {
 }
 
 function resetTimers() {
+  console.log('resetting')
   xTimeBar.style.animation = "none";
   oTimeBar.style.animation = "none";
   
@@ -115,7 +114,6 @@ function resetInactivity() {
 
   timeoutId = setTimeout(() => {
     if (winner !== null) return;
-    resetTimers();
     winner = xTurn ? "O" : "X";
     showAlert(`${winner} wins by timeout!`);
   }, 15000);
